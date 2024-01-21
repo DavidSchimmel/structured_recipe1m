@@ -158,3 +158,26 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+
+# data
+*/data/input/*
+*/data/output/*
+data/input/edges_191120.csv
+data/input/nodes_191120.csv
+data/input/test_comments_subs.pkl
+data/input/train_comments_subs.pkl
+data/input/val_comments_subs.pkl
+data/output/simple_recipe_ingredient_graph/edges_191120.csv
+data/output/simple_recipe_ingredient_graph/nodes_191120.csv
+data/input/extended_recipes_with_quantities.json
+data/input/minimal_recipe_dataset.pkl
+data/intermediary/recipes_with_ingr_cnt_to_step.pkl
+data/output/simple_recipe_with_context_simple_instructions/edges_191120.csv
+data/output/simple_recipe_with_context_simple_instructions/nodes_191120.csv
+data/output/simple_recipe_with_context_structured_instructions/edges.csv
+data/output/simple_recipe_with_context_structured_instructions/nodes.csv
+data/intermediary/step_dicts.pkl
+data/intermediary/distinct_verbs_cnt.pkl
+data/intermediary/ingredient_to_node_idx.pkl
+data/intermediary/nodes_to_tokens.pkl
