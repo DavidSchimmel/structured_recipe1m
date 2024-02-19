@@ -6,8 +6,9 @@ from data import loader
 from structure_extraction import (graph_generator, recipe_parser)
 
 GENERATE_RECIPE_CONTEXT_SIMPLE_GRAPH = False
-GENERATE_RECIP_CONTEXT_WITH_SIMPLE_ACTIONS = False
-GENERATE_RECIP_CONTEXT_WITH_INTERMEDIARY_ACTIONS = True
+GENERATE_RECIPE_CONTEXT_WITH_SIMPLE_ACTIONS = False
+GENERATE_RECIPE_CONTEXT_WITH_INTERMEDIARY_ACTIONS = False
+GENERATE_RECIPE_CONtEXT_WITH_INTERMEDIARY_ACTIONS_ARC_RECS_ONLY = True
 
 
 RECIPES_EXTENDED_PATH = os.path.abspath("./data/input/extended_recipes_with_quantities.json")
@@ -15,9 +16,13 @@ TRAIN_COMMENTS_PATH = os.path.abspath("./data/input/train_comments_subs.pkl")
 TEST_COMMENTS_PATH = os.path.abspath("./data/input/test_comments_subs.pkl")
 VAL_COMMENTS_PATH = os.path.abspath("./data/input/val_comments_subs.pkl")
 MINIMAL_RECIPES_PATH = os.path.abspath("./data/input/minimal_recipe_dataset.pkl") # this one will be the one that we calculate with. It should look like a dict with recipe_id as key and value as dict with keys "ingredients" and "instructions" and the corresponding arrays
+ARC_ONLY_SAMPLES_PATH = os.path.abspath("./data/input/tmp_total_arcelik_only_comments.pkl") # reduced recipe set that only contains recipes in the arc only dataset
+
 SIMPLE_RECIPE_INGREDIENT_GRAPH_DIR = os.path.abspath("./data/output/simple_recipe_ingredient_graph/")
 SIMPLE_RECIPE_CONTEXT_SIMPLE_INSTRUCTIONS_DIR = os.path.abspath("./data/output/simple_recipe_with_context_simple_instructions/")
 SIMPLE_RECIPE_CONTEXT_STRUCTURED_INSTRUCTIONS_DIR = os.path.abspath("./data/output/simple_recipe_with_context_structured_instructions/")
+SIMPLE_RECIPE_CONTEXT_STRUCTURED_INSTRUCTIONS_ARC_DIR = os.path.abspath("./data/output/simple_recipe_with_context_structured_instructions_arc/")
+
 
 NODES_PATH = os.path.abspath("./data/input/nodes_191120.csv")
 EDGES_PATH = os.path.abspath("./data/input/edges_191120.csv")
@@ -73,13 +78,25 @@ def main():
         with open(REC_W_INGR_CNT_TO_STEP_PATH, "wb") as rec_with_ingr_cnt_to_step_file:
             pickle.dump(recipes_with_ingredients_to_steps, rec_with_ingr_cnt_to_step_file)
 
-    if GENERATE_RECIP_CONTEXT_WITH_SIMPLE_ACTIONS:
+    if GENERATE_RECIPE_CONTEXT_WITH_SIMPLE_ACTIONS:
         graph_generator.generateRecipeInstructionsGraph(recipes, parsed_recipes, recipes_with_ingredients_to_steps, distinct_verbs, ingredient_variant_to_node_index, raw_nodes, raw_edges, SIMPLE_RECIPE_CONTEXT_SIMPLE_INSTRUCTIONS_DIR)
 
-    if GENERATE_RECIP_CONTEXT_WITH_INTERMEDIARY_ACTIONS:
+    if GENERATE_RECIPE_CONTEXT_WITH_INTERMEDIARY_ACTIONS:
         graph_generator.generateStructuredRecipeInstructionsGraph(recipes, parsed_recipes, recipes_with_ingredients_to_steps, distinct_verbs, ingredient_variant_to_node_index, raw_nodes, raw_edges, SIMPLE_RECIPE_CONTEXT_STRUCTURED_INSTRUCTIONS_DIR)
 
+    if SIMPLE_RECIPE_CONTEXT_STRUCTURED_INSTRUCTIONS_ARC_DIR:
+        # because encoding all recipes with intermediary nodes leads to very many nodes, try if the model can be reasonably evaluated by encoding only the arc recipes (recipes that are contained in the arc_subs ground truth substitution data set)
+        with open(ARC_ONLY_SAMPLES_PATH, "rb") as arc_only_file:
+            arc_only_samples = pickle.load(arc_only_file)
+        filter_list = list(set([sample["id"] for sample in arc_only_samples]))
+        filtered_recipes = filter_recipes(recipes, filter_list)
+        graph_generator.generateStructuredRecipeInstructionsGraph(filtered_recipes, parsed_recipes, recipes_with_ingredients_to_steps, distinct_verbs, ingredient_variant_to_node_index, raw_nodes, raw_edges, SIMPLE_RECIPE_CONTEXT_STRUCTURED_INSTRUCTIONS_ARC_DIR)
+
     print("Done.")
+
+def filter_recipes(recipes, filter_list):
+    filtered_recipes = {recipe_id: recipe for recipe_id, recipe in list(recipes.items()) if recipe_id in filter_list}
+    return filtered_recipes
 
 if __name__ == "__main__":
     main()

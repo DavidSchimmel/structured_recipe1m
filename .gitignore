@@ -177,6 +177,9 @@ data/output/simple_recipe_with_context_simple_instructions/edges_191120.csv
 data/output/simple_recipe_with_context_simple_instructions/nodes_191120.csv
 data/output/simple_recipe_with_context_structured_instructions/edges.csv
 data/output/simple_recipe_with_context_structured_instructions/nodes.csv
+data/output/simple_recipe_with_context_structured_instructions_arc/edges_191120.csv
+data/output/simple_recipe_with_context_structured_instructions_arc/nodes_191120.csv
+data/input/tmp_total_arcelik_only_comments.pkl
 data/intermediary/step_dicts.pkl
 data/intermediary/distinct_verbs_cnt.pkl
 data/intermediary/ingredient_to_node_idx.pkl
