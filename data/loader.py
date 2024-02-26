@@ -3,7 +3,7 @@ import os
 import pickle
 import csv
 
-def load_recipes(minimal_ds_path, recipes_extended_path, train_set_path, test_set_path, val_set_path, flavourgraph_nodes_path):
+def load_recipes(minimal_ds_path, recipes_extended_path, train_set_path, test_set_path, val_set_path):
 
     recipes = None
 
@@ -43,10 +43,9 @@ def getFlavourgraphIngrNodes(flavourgraph_nodes_path):
 
 def load_data(minimal_ds_path, recipes_extended_path, train_set_path, test_set_path, val_set_path, nodes_path):
     fg_nodes = getFlavourgraphIngrNodes(nodes_path)
-    fg_node_labels = [row[1] for row in fg_nodes]
-    recipes = load_recipes(minimal_ds_path, recipes_extended_path, train_set_path, test_set_path, val_set_path, fg_node_labels)
+    recipes = load_recipes(minimal_ds_path, recipes_extended_path, train_set_path, test_set_path, val_set_path)
 
-    return recipes, fg_node_labels, fg_nodes
+    return recipes, fg_nodes
 
 def load_raw_graph(nodes_path, edges_path):
     ingredient_count = 0

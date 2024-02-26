@@ -74,7 +74,7 @@ def main():
         with open(REC_W_INGR_CNT_TO_STEP_PATH, 'rb') as file:
             recipes_with_ingredients_to_steps = pickle.load(file)
     else:
-        recipes_with_ingredients_to_steps = graph_generator.match_ingredients_to_instructions(recipes, parsed_recipes, node_to_tokens)
+        recipes_with_ingredients_to_steps = graph_generator.match_ingredients_to_instructions(recipes, parsed_recipes)
         with open(REC_W_INGR_CNT_TO_STEP_PATH, "wb") as rec_with_ingr_cnt_to_step_file:
             pickle.dump(recipes_with_ingredients_to_steps, rec_with_ingr_cnt_to_step_file)
 

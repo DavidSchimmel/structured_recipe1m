@@ -8,7 +8,7 @@ def generate_graph():
     assert False
 
 
-def match_ingredients_to_instructions(recipes, parsed_recipes, node_to_tokens):
+def match_ingredients_to_instructions(recipes, parsed_recipes):
     match_threshold = 75
     for recipe_id in recipes:
         recipe_ingredients_at_step = {}
@@ -35,7 +35,7 @@ def match_ingredients_to_instructions(recipes, parsed_recipes, node_to_tokens):
                 noun = noun.replace(" ", "_")
                 closest_match = process.extractOne(noun, ingredient_variant_labels)
 
-                # maybe filter according to threshold
+                # filter according to threshold
                 if closest_match and closest_match[1] > match_threshold:
                     ingredient_count = ingredients_map[closest_match[0]]
                     if ingredient_count not in recipe_ingredient_count_at_step:
@@ -625,7 +625,6 @@ def generateStructuredRecipeInstructionsGraphReduced(recipes, parsed_recipes, re
                             current_active_step = step
 
         # connect intermediary product nodes according to step connections
-        # TODO add some check to verify that the whole recipe is connected (but be careful not to add too many edges)
         # filled_steps = [step for step, nodes in step_nodes.items() if len(nodes) > 0]
         # for i, step in enumerate(filled_steps):
         #     if i+1 > len(filled_steps):

@@ -119,7 +119,7 @@ def spreadInstructions(recipes):
     return instruction_list
 
 def parseSteps(instruction_list):
-    """This function was taken, with minor adjustments, from https://github.com/boschresearch/EaT-PIM/blob/main/eatpim/etl/parse_documents.py
+    """This function was adopted, with minor adjustments, from https://github.com/boschresearch/EaT-PIM/blob/main/eatpim/etl/parse_documents.py
 
     Args:
         instruction_list (_type_): _description_
