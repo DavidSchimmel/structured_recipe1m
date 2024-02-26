@@ -33,7 +33,7 @@ DISTINCT_VERBS_COUNT_PATH = os.path.abspath("./data/intermediary/distinct_verbs_
 INGREDIENT_VARIANT_TO_NODE_IDX_PATH = os.path.abspath("./data/intermediary/ingredient_to_node_idx.pkl")
 
 def main():
-    recipes, flavourgraph_node_labels, flavourgraph_nodes = loader.load_data(
+    recipes, flavourgraph_nodes = loader.load_data(
         MINIMAL_RECIPES_PATH,
         RECIPES_EXTENDED_PATH,
         TRAIN_COMMENTS_PATH,
@@ -44,7 +44,6 @@ def main():
 
     raw_nodes, raw_edges = loader.load_raw_graph(NODES_PATH, EDGES_PATH)
 
-    node_to_tokens = recipe_parser.parseIngredients(recipes, flavourgraph_node_labels)
     parsed_recipes = recipe_parser.parseRecipes(recipes)
 
     if os.path.exists(DISTINCT_VERBS_COUNT_PATH):
