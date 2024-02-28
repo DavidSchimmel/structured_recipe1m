@@ -49,6 +49,7 @@ In the process, several intermediary files are created in the `intermediary` dir
   - `data\output\simple_recipe_with_context_simple_instructions` - for bipartite graph with recipe, action, and ingredient nodes
   - `data\output\simple_recipe_with_context_structured_instructions` - for a graph with intermediary node connected by directed edges
   - `data\output\simple_recipe_with_context_structured_instructions_arc` - for a graph with intermediary node connected by directed edges, but only for the ArcSubs recipes
+- if you want to use one of those graphs as input in GISMo, the easiest way would be to rename the nodes.csv to `nodes_191120.csv` and the `edges.csv` to `edges_191120.csv` and copy them into the `gismo\checkpoints\graph` direcotry in the [gismo repo](https://github.com/DavidSchimmel/gismo/tree/um_mt_extensions)
 
 ## Credits
 
