@@ -91,8 +91,12 @@ def getIngredientVariantToNode(recipes, nodes):
     return ingredient_variant_to_node_index, ingredient_variant_to_node_label, unmatched_ingredient_variants
 
 def generateRecipeIngredientGraph(recipes, ingredient_variant_to_node_index, nodes, edges, output_dir):
+    dummy_row = edges[1]
+
     # remove all ingredient-ingredient edges
     edges = [row for row in edges if row[3] != "ingr-ingr"]
+    # hack to avoid gismo np error resolving all types properly
+    edges.insert(0, dummy_row)
 
     # add recipe_ids to nodes with recipe type
     node_id = 0
@@ -150,8 +154,13 @@ def getUniqueActionNodeName(action, existing_node_names):
     return action
 
 def generateRecipeInstructionsGraph(recipes, parsed_recipes, recipes_with_ingredients_to_steps, distinct_verbs, ingredient_variant_to_node_index, nodes, edges, output_dir):
+    dummy_row = edges[1]
+
     # remove all ingredient-ingredient edges
     edges = [row for row in edges if row[3] != "ingr-ingr"]
+    # hack to avoid gismo np error resolving all types properly
+    edges.insert(0, dummy_row)
+
     existing_node_names = [row[1] for row in nodes]
 
     # add recipe_ids to nodes with recipe type
@@ -232,8 +241,13 @@ def generateRecipeInstructionsGraph(recipes, parsed_recipes, recipes_with_ingred
             writer.writerow(row)
 
 def generateStructuredRecipeInstructionsGraph(recipes, parsed_recipes, recipes_with_ingredients_to_steps, distinct_verbs, ingredient_variant_to_node_index, nodes, edges, output_dir):
+    dummy_row = edges[1]
+
     # remove all ingredient-ingredient edges
     edges = [row for row in edges if row[3] != "ingr-ingr"]
+    # hack to avoid gismo np error resolving all types properly
+    edges.insert(0, dummy_row)
+
     existing_node_names = [row[1] for row in nodes]
 
     n_potential_error_recipes = 0
@@ -461,8 +475,13 @@ def generateStructuredRecipeInstructionsGraph(recipes, parsed_recipes, recipes_w
 
 
 def generateStructuredRecipeInstructionsGraphReduced(recipes, parsed_recipes, recipes_with_ingredients_to_steps, distinct_verbs, ingredient_variant_to_node_index, nodes, edges, output_dir):
+    dummy_row = edges[1]
+
     # remove all ingredient-ingredient edges
     edges = [row for row in edges if row[3] != "ingr-ingr"]
+    # hack to avoid gismo np error resolving all types properly
+    edges.insert(0, dummy_row)
+
     existing_node_names = [row[1] for row in nodes]
 
     n_potential_error_recipes = 0
